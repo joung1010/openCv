@@ -81,21 +81,29 @@ public class SSIMCalculator {
         String targetImagePath = extractResourceToTempFile("/images/target6.jpg", "target", ".jpg");
 
         Mat templateImage = Imgcodecs.imread(templateImagePath, Imgcodecs.IMREAD_GRAYSCALE);
+
         Mat targetImage = Imgcodecs.imread(targetImagePath, Imgcodecs.IMREAD_GRAYSCALE);
 
         // 타겟 이미지 크기 조정
         Mat resizedImage = new Mat();
         Size sz = new Size(templateImage.width(), templateImage.height());
         // 이미지 사이즈 조정
-        Imgproc.resize(targetImage, resizedImage, sz, 0, 0, Imgproc.INTER_AREA);
+        Imgproc.resize(targetImage, resizedImage, sz, 0, 0, Imgproc.INTER_CUBIC);
 
         // 두 이미지에 Gaussian Blur 적용
-        Imgproc.GaussianBlur(templateImage, templateImage, new Size(3, 3), 0.5);
-        Imgproc.GaussianBlur(resizedImage, resizedImage, new Size(3, 3), 0.5);
+//        Imgproc.GaussianBlur(templateImage, templateImage, new Size(3, 3), 0.5);
+//        Imgproc.GaussianBlur(resizedImage, resizedImage, new Size(3, 3), 0.5);
+
+        Mat normalizedTemplateImage = new Mat();
+        Core.normalize(templateImage, normalizedTemplateImage, 0, 255, Core.NORM_MINMAX, -1, new Mat());
+
+        Mat normalizedTargetImage = new Mat();
+        Core.normalize(resizedImage, normalizedTargetImage, 0, 255, Core.NORM_MINMAX, -1, new Mat());
+
 
 
         // SSIM 계산
-        double ssim = calculateSSIM(templateImage, resizedImage);
+        double ssim = calculateSSIM(normalizedTemplateImage, normalizedTargetImage);
         System.out.printf("SSIM: %f\n", ssim);
     }
 }

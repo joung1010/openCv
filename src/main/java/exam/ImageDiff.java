@@ -15,23 +15,30 @@ public class ImageDiff {
 
         // 이미지 크기 조정
         Mat resizedImage1 = new Mat();
-        Mat resizedImage2 = new Mat();
         Imgproc.resize(img1, resizedImage1, new Size(img2.width(), img2.height()));
 
         // 두 이미지 간의 차이 계산
         Mat diff = new Mat();
         Core.absdiff(resizedImage1, img2, diff);
-        // 차이가 있는 픽셀을 이진화하여 강조
-        Core.subtract(new Mat(diff.size(), CvType.CV_8UC1, new Scalar(255)), diff, diff);
         // 차이 이미지 이진화
         Imgproc.threshold(diff, diff, 1, 255, Imgproc.THRESH_BINARY);
 
         // 차이가 있는지 여부를 판단
         int nonZeroCount = Core.countNonZero(diff);
-        if (nonZeroCount > 0) {
-            System.out.println("Images are different");
+        System.out.println("nonZeroCount = " + nonZeroCount);
+
+        // 차이 비율 계산
+        double totalPixels = img1.size().area();
+        System.out.println("totalPixels = " + totalPixels);
+        double diffPercentage = (double) nonZeroCount / totalPixels;
+        System.out.println("diffPercentage = " + diffPercentage);
+        // 임계값 설정 (예: 1%)
+        double threshold = 0.01;
+
+        if (diffPercentage < threshold) {
+            System.out.println("Images are considered the same");
         } else {
-            System.out.println("Images are the same");
+            System.out.println("Images are different");
         }
     }
 }

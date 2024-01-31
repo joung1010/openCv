@@ -78,7 +78,7 @@ public class SSIMCalculator {
     public static void main(String[] args) throws Exception{
         // 템플릿 이미지와 타겟 이미지 로드
         String templateImagePath = extractResourceToTempFile("/images/template.jpg", "template", ".jpg");
-        String targetImagePath = extractResourceToTempFile("/images/target6.jpg", "target", ".jpg");
+        String targetImagePath = extractResourceToTempFile("/images/target2.jpg", "target", ".jpg");
 
         Mat templateImage = Imgcodecs.imread(templateImagePath, Imgcodecs.IMREAD_GRAYSCALE);
 

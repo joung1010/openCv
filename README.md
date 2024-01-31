@@ -14,6 +14,9 @@
 - **개요**: ImageJ는 이미지 처리를 위한 자바 기반의 오픈 소스 프로그램입니다.
 - **기능**: 매크로 및 플러그인 구조를 통해 확장 가능하며, 이미지 분석, 처리, 편집 등의 기능을 제공합니다.
 
-### **예시 코드**
+### **참고**
 https://sourceforge.net/projects/opencvlibrary/files/
 해당 링크에 접속해서 window 용 파일 다운로드후 .exe 파일 실행하면 폴더안에 jar파일이 있음
+
+https://github.com/bytedeco/javacv/issues/1598  
+해당 예제 참고

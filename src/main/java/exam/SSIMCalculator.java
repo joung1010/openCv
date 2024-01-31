@@ -78,7 +78,7 @@ public class SSIMCalculator {
     public static void main(String[] args) throws Exception{
         // 템플릿 이미지와 타겟 이미지 로드
         String templateImagePath = extractResourceToTempFile("/images/template.jpg", "template", ".jpg");
-        String targetImagePath = extractResourceToTempFile("/images/target.jpg", "template", ".jpg");
+        String targetImagePath = extractResourceToTempFile("/images/target6.jpg", "target", ".jpg");
 
         Mat templateImage = Imgcodecs.imread(templateImagePath, Imgcodecs.IMREAD_GRAYSCALE);
         Mat targetImage = Imgcodecs.imread(targetImagePath, Imgcodecs.IMREAD_GRAYSCALE);
@@ -86,11 +86,12 @@ public class SSIMCalculator {
         // 타겟 이미지 크기 조정
         Mat resizedImage = new Mat();
         Size sz = new Size(templateImage.width(), templateImage.height());
-        Imgproc.resize(targetImage, resizedImage, sz);
+        // 이미지 사이즈 조정
+        Imgproc.resize(targetImage, resizedImage, sz, 0, 0, Imgproc.INTER_AREA);
 
         // 두 이미지에 Gaussian Blur 적용
-        Imgproc.GaussianBlur(templateImage, templateImage, new Size(15, 15), 10);
-        Imgproc.GaussianBlur(resizedImage, resizedImage, new Size(15, 15), 10);
+        Imgproc.GaussianBlur(templateImage, templateImage, new Size(11, 11), 1.5);
+        Imgproc.GaussianBlur(resizedImage, resizedImage, new Size(11, 11), 1.5);
 
         // SSIM 계산
         double ssim = calculateSSIM(templateImage, resizedImage);

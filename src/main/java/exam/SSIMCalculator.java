@@ -90,8 +90,9 @@ public class SSIMCalculator {
         Imgproc.resize(targetImage, resizedImage, sz, 0, 0, Imgproc.INTER_AREA);
 
         // 두 이미지에 Gaussian Blur 적용
-        Imgproc.GaussianBlur(templateImage, templateImage, new Size(11, 11), 1.5);
-        Imgproc.GaussianBlur(resizedImage, resizedImage, new Size(11, 11), 1.5);
+        Imgproc.GaussianBlur(templateImage, templateImage, new Size(3, 3), 0.5);
+        Imgproc.GaussianBlur(resizedImage, resizedImage, new Size(3, 3), 0.5);
+
 
         // SSIM 계산
         double ssim = calculateSSIM(templateImage, resizedImage);
